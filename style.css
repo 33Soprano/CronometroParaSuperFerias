@@ -1,0 +1,287 @@
+:root {
+    --primary-color: #ff4d6d;
+    --secondary-color: #590d22;
+    --text-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-color);
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.background-animation {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 77, 109, 0.2) 10%, transparent 40%);
+    animation: moveBackground 15s infinite linear;
+    z-index: -1;
+}
+
+@keyframes moveBackground {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    z-index: 10;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Timer Styles */
+.timer-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.time-unit {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 15px;
+    min-width: 100px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.time-unit span {
+    font-size: 3rem;
+    font-weight: 700;
+    display: block;
+}
+
+.time-unit p {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+/* Card Reveal Styles */
+.card-container {
+    background-color: transparent;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: 0 auto;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.card-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-container.hidden {
+    display: none;
+    /* Actually remove it until ready */
+}
+
+/* Override hidden for logic usage but keep using opacity for animation */
+.card-container:not(.hidden) {
+    display: block;
+}
+
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card-front {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(20px);
+    /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+}
+
+.gift-icon {
+    font-size: 5rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-20px);
+    }
+
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.card-back {
+    background: #000;
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.message {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .timer-container {
+        gap: 0.5rem;
+    }
+
+    .time-unit {
+        min-width: 70px;
+        padding: 1rem;
+    }
+
+    /* Floating Gift Styles */
+    .floating-gift {
+        position: absolute;
+        font-size: 3rem;
+        cursor: pointer;
+        animation: floatUp 10s linear;
+        z-index: 20;
+        transition: transform 0.2s;
+        user-select: none;
+    }
+
+    .floating-gift:hover {
+        transform: scale(1.2);
+    }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(110vh) rotate(0deg);
+            opacity: 0;
+        }
+
+        10% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateY(-10vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    /* Popup Modal */
+    .popup-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .popup-modal.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .popup-content {
+        max-width: 90%;
+        max-height: 90%;
+        transform: scale(0.8);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .popup-modal.active .popup-content {
+        transform: scale(1);
+    }
+
+    .popup-content img {
+        max-width: 100%;
+        max-height: 80vh;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+        border: 3px solid white;
+    }

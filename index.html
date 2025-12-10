@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva Especial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff4d6d;
+            --secondary-color: #590d22;
+            --accent-color: #ffb3c1;
+            --text-color: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --dark-bg: #0f0c29;
+            --gradient-bg: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-color);
+            background: var(--gradient-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255, 77, 109, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 179, 193, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 40% 80%, rgba(89, 13, 34, 0.2) 0%, transparent 25%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(30px, -30px) rotate(1deg);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(-1deg);
+            }
+        }
+
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            padding: 1rem;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Timer Styles */
+        .timer-section {
+            margin-bottom: 4rem;
+        }
+
+        .timer-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem auto;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+
+        .time-unit {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem 1rem;
+            border-radius: 20px;
+            min-width: 120px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-unit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+        }
+
+        .time-unit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .time-unit:hover::before {
+            animation: shine 1s;
+        }
+
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .time-unit span {
+            font-size: 3.5rem;
+            font-weight: 700;
+            display: block;
+            background: linear-gradient(to bottom, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .time-unit p {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .event-date {
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            padding: 1rem 2rem;
+            background: rgba(89, 13, 34, 0.3);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        /* Surprise Section */
+        .surprise-section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .surprise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card-container {
+            background-color: transparent;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card-container:hover {
+            transform: scale(1.03);
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .gift-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s infinite;
+            filter: drop-shadow(0 5px 15px rgba(255, 77, 109, 0.5));
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            40% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+
+            60% {
+                transform: translateY(-10px) rotate(-5deg);
+            }
+        }
+
+        .card-front p {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .card-back {
+            background: #000;
+            transform: rotateY(180deg);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card-back:hover img {
+            transform: scale(1.05);
+        }
+
+        .message-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Floating Gifts */
+        .floating-gift {
+            position: fixed;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 100;
+            user-select: none;
+            pointer-events: auto;
+            animation: floatUp 15s linear forwards;
+            filter: drop-shadow(0 5px 15px rgba(255, 77, 109, 0.7));
+            transition: transform 0.3s ease;
+        }
+
+        .floating-gift:hover {
+            transform: scale(1.3) rotate(20deg);
+            animation-play-state: paused;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Popup Modal */
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .popup-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .popup-content {
+            max-width: 90%;
+            max-height: 90%;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-modal.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border-radius: 15px;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
+        }
+
+        .close-popup {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .close-popup:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .timer-container {
+                gap: 0.8rem;
+            }
+
+            .time-unit {
+                min-width: 80px;
+                padding: 1rem 0.5rem;
+            }
+
+            .time-unit span {
+                font-size: 2.5rem;
+            }
+
+            .surprise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-container {
+                height: 350px;
+            }
+
+            .floating-gift {
+                font-size: 2rem;
+            }
+        }
+
+        /* Countdown Complete Styles */
+        .countdown-complete .timer-container {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .complete-message {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 2rem 0;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            }
+
+            to {
+                text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-hourglass-half"></i> Contagem Regressiva Especial</h1>
+            <p class="subtitle">Uma surpresa incrível está chegando! Acompanhe cada segundo até o grande momento.</p>
+        </header>
+
+        <section class="timer-section">
+            <div class="timer-container" id="timer">
+                <div class="time-unit">
+                    <span id="days">00</span>
+                    <p>Dias</p>
+                </div>
+                <div class="time-unit">
+                    <span id="hours">00</span>
+                    <p>Horas</p>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes">00</span>
+                    <p>Minutos</p>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds">00</span>
+                    <p>Segundos</p>
+                </div>
+            </div>
+
+            <div class="event-date">
+                <i class="far fa-calendar-alt"></i> Data do Evento: 18 de Dezembro de 2025 às 18:00
+            </div>
+        </section>
+
+        <section class="surprise-section">
+            <h2 class="section-title">Surpresas Escondidas</h2>
+            <p class="subtitle">Clique nos presentes para revelar as surpresas!</p>
+
+            <div class="surprise-grid">
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front">
+                            <div class="gift-icon">🎁</div>
+                            <p>Presente 1</p>
+                            <small>Clique para revelar</small>
+                        </div>
+                        <div class="card-back">
+                            <img src="surprise.jpg" alt="Surpresa 1">
+                            <div class="message-overlay">
+                                <div class="message">Momento Especial! ❤️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front">
+                            <div class="gift-icon">✨</div>
+                            <p>Presente 2</p>
+                            <small>Clique para revelar</small>
+                        </div>
+                        <div class="card-back">
+                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Celebração">
+                            <div class="message-overlay">
+                                <div class="message">Celebre Conosco! 🎉</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-front">
+                            <div class="gift-icon">🎈</div>
+                            <p>Presente 3</p>
+                            <small>Clique para revelar</small>
+                        </div>
+                        <div class="card-back">
+                            <img src="surprise3.jpg" alt="Surpresa 3">
+                            <div class="message-overlay">
+                                <div class="message">Barbie 1933 🎀</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="popup-modal" class="popup-modal">
+            <button class="close-popup">&times;</button>
+            <div class="popup-content">
+                <img src="surprise.jpg" alt="Surpresa Ampliada">
+            </div>
+        </div>
+
+        <footer>
+            <p>Contagem Regressiva Especial &copy; 2025 | Design atualizado com interatividade</p>
+            <p>Clique nos presentes flutuantes para ver mais surpresas!</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const left = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+                particle.style.background = `rgba(255, ${Math.random() * 155 + 100}, ${Math.random() * 155 + 100}, 0.7)`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Target Date: 18/12/2025 18:00:00
+        const targetDate = new Date('2025-12-18T18:00:00').getTime();
+
+        const timer = setInterval(function () {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display result
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the count down is finished
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("timer").parentElement.classList.add("countdown-complete");
+                document.querySelector("h1").innerHTML = '<i class="fas fa-star"></i> Chegou a Hora! <i class="fas fa-star"></i>';
+                document.querySelector(".subtitle").textContent = "O momento tão esperado finalmente chegou!";
+
+                // Show complete message
+                const completeMsg = document.createElement('div');
+                completeMsg.className = 'complete-message';
+                completeMsg.innerHTML = '🎉 PARABÉNS! O EVENTO COMEÇOU! 🎉';
+                document.querySelector('.timer-section').appendChild(completeMsg);
+
+                // Reveal all surprises
+                revealAllSurprises();
+            }
+        }, 1000);
+
+        function revealAllSurprises() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('flipped');
+                }, index * 500);
+            });
+
+            // Create more floating gifts
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => createFloatingGift(), i * 300);
+            }
+        }
+
+        // Card Click Interaction
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function () {
+                this.classList.toggle('flipped');
+            });
+        });
+
+        // Floating Surprises Logic
+        const popupModal = document.getElementById('popup-modal');
+        const closePopup = document.querySelector('.close-popup');
+        const icons = ['🎁', '✨', '🎈', '💖', '🎀', '🌟', '🥳', '🎊'];
+        const surpriseImages = [
+            'surprise.jpg',
+            'surprise3.jpg',
+            'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ];
+
+        function createFloatingGift() {
+            const gift = document.createElement('div');
+            gift.classList.add('floating-gift');
+            gift.innerText = icons[Math.floor(Math.random() * icons.length)];
+
+            // Random Position
+            const startLeft = Math.random() * 90 + 5;
+            gift.style.left = startLeft + 'vw';
+
+            // Random Animation Duration
+            const duration = Math.random() * 10 + 10;
+            gift.style.animationDuration = duration + 's';
+
+            // Click Event
+            gift.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showPopup();
+                gift.remove();
+            });
+
+            document.body.appendChild(gift);
+
+            // Remove when animation ends
+            setTimeout(() => {
+                if (gift.parentNode) gift.remove();
+            }, duration * 1000);
+        }
+
+        function showPopup() {
+            const popupImg = document.querySelector('.popup-content img');
+            const randomImage = surpriseImages[Math.floor(Math.random() * surpriseImages.length)];
+            popupImg.src = randomImage;
+
+            popupModal.classList.add('active');
+        }
+
+        // Close popup
+        closePopup.addEventListener('click', () => {
+            popupModal.classList.remove('active');
+        });
+
+        popupModal.addEventListener('click', (e) => {
+            if (e.target === popupModal) {
+                popupModal.classList.remove('active');
+            }
+        });
+
+        // Spawn gifts every 3 seconds
+        setInterval(createFloatingGift, 3000);
+
+        // Create initial particles and gifts
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+
+            // Create initial floating gifts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createFloatingGift(), i * 1000);
+            }
+
+            // Preload images
+            surpriseImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+
+        // Add keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && popupModal.classList.contains('active')) {
+                popupModal.classList.remove('active');
+            }
+
+            // Spacebar flips random card
+            if (e.key === ' ' && !e.target.matches('input, textarea')) {
+                const cards = document.querySelectorAll('.card');
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                randomCard.classList.toggle('flipped');
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>
