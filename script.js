@@ -1,5 +1,5 @@
 // Target Date: 18/12/2025 18:00:00
-const targetDate = new Date('2025-12-18T18:00:00').getTime();
+const targetDate = new Date('2025-12-19T17:00:00').getTime();
 
 const timer = setInterval(function () {
     const now = new Date().getTime();
@@ -92,4 +92,5 @@ setInterval(createFloatingGift, 2000);
 popupModal.addEventListener('click', () => {
     popupModal.classList.remove('active');
 });
+
 
