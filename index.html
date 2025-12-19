@@ -359,6 +359,282 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
         }
 
+        /* Zé Pilantra Section - GRANDE NA TELA */
+        .ze-pilantra-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0c29cc, #302b63cc, #24243ecc);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .ze-container {
+            max-width: 90%;
+            width: 1000px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 77, 109, 0.3);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 25px 75px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ze-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 77, 109, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .ze-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ze-image {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.7);
+            animation: pulseBorder 2s infinite alternate;
+        }
+
+        @keyframes pulseBorder {
+            0% {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
+            }
+
+            100% {
+                border-color: #ff00ff;
+                box-shadow: 0 0 50px rgba(255, 0, 255, 0.8);
+            }
+        }
+
+        .ze-message-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .ze-title {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d;
+            }
+
+            to {
+                text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff, 0 0 40px #ff00ff;
+            }
+        }
+
+        .ze-text {
+            font-size: 2rem;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .ze-name {
+            font-size: 4rem;
+            color: #ff00ff;
+            margin: 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: bounceName 0.8s infinite alternate;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+
+        @keyframes bounceName {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        .ze-axe {
+            font-size: 2.5rem;
+            color: #ffff00;
+            margin: 1rem 0;
+            animation: rotateAxe 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes rotateAxe {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(10deg);
+            }
+
+            75% {
+                transform: rotate(-10deg);
+            }
+        }
+
+        .timer-finished {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .finished-badge {
+            font-size: 1.5rem;
+            color: #00ff00;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .finished-badge i {
+            animation: spin 2s infinite linear;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .finished-time {
+            font-size: 3rem;
+            font-family: monospace;
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            animation: blinkTime 1s infinite;
+        }
+
+        @keyframes blinkTime {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .celebration-effects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .effect {
+            position: absolute;
+            font-size: 3rem;
+            animation: floatEffect 15s infinite linear;
+        }
+
+        .e1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .e2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+
+        .e3 {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .e4 {
+            bottom: 20%;
+            right: 25%;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatEffect {
+            0% {
+                transform: translateY(100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         /* Floating Gifts */
         .floating-gift {
             position: fixed;
@@ -479,6 +755,31 @@
         }
 
         /* Responsive */
+        @media (max-width: 900px) {
+            .ze-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .ze-image {
+                width: 300px;
+                height: 300px;
+            }
+
+            .ze-title {
+                font-size: 2rem;
+            }
+
+            .ze-name {
+                font-size: 3rem;
+            }
+
+            .ze-text,
+            .ze-axe {
+                font-size: 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -539,22 +840,42 @@
             margin: 2rem 0;
             animation: glow 1.5s infinite alternate;
         }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-            }
-
-            to {
-                text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
-            }
-        }
     </style>
 </head>
 
 <body>
     <div class="background-animation"></div>
     <div class="particles" id="particles"></div>
+
+    <!-- SEÇÃO ZÉ PILANTRA (aparece quando o timer chega a 0) -->
+    <section class="ze-pilantra-section" id="ze-pilantra-section">
+        <div class="ze-container">
+            <div class="ze-content">
+                <img src="ze-pilantra.png" alt="Zé Pilantra" class="ze-image">
+                <div class="ze-message-container">
+                    <h2 class="ze-title">🎉 CHEGOU A HORA! 🎉</h2>
+                    <p class="ze-text">"Vamos para 2025 com ajuda do</p>
+                    <h3 class="ze-name">ZÉ PILANTRA</h3>
+                    <p class="ze-axe">AXÉ! 🕺✨"</p>
+                    <div class="timer-finished">
+                        <div class="finished-badge">
+                            <i class="fas fa-check-circle"></i> CONTAGEM CONCLUÍDA!
+                        </div>
+                        <div class="finished-time">
+                            00:00:00:00
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="celebration-effects">
+                <div class="effect e1">🎊</div>
+                <div class="effect e2">✨</div>
+                <div class="effect e3">🕺</div>
+                <div class="effect e4">🌟</div>
+            </div>
+        </div>
+    </section>
 
     <div class="container">
         <header>
@@ -657,7 +978,7 @@
     </div>
 
     <script>
-        // Create floating particles
+        // Criar partículas flutuantes
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 50;
@@ -666,7 +987,7 @@
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
 
-                // Random properties
+                // Propriedades aleatórias
                 const size = Math.random() * 5 + 2;
                 const left = Math.random() * 100;
                 const duration = Math.random() * 20 + 10;
@@ -684,7 +1005,7 @@
             }
         }
 
-        // Target Date: HOJE às 17:00:00
+        // Data alvo: HOJE às 17:00:00
         const today = new Date();
         today.setHours(17, 0, 0, 0);
         const targetDate = today.getTime();
@@ -693,35 +1014,105 @@
             const now = new Date().getTime();
             const distance = targetDate - now;
 
-            // Time calculations
+            // Cálculos de tempo
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display result
+            // Mostrar resultado
             document.getElementById("days").innerText = days < 10 ? "0" + days : days;
             document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-            // If the count down is finished
+            // Se a contagem terminar
             if (distance < 0) {
                 clearInterval(timer);
+
+                // Zerar o timer na tela
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+
+                // Adicionar classe de conclusão ao timer
                 document.getElementById("timer").parentElement.classList.add("countdown-complete");
+
+                // Atualizar título principal
                 document.querySelector("h1").innerHTML = '<i class="fas fa-star"></i> Chegou a Hora! <i class="fas fa-star"></i>';
-                document.querySelector(".subtitle").textContent = "O momento tão esperado finalmente chegou!";
+                document.querySelector(".subtitle").textContent = "O Zé Pilantra chegou para 2025! 🕺✨";
 
-                // Show complete message
-                const completeMsg = document.createElement('div');
-                completeMsg.className = 'complete-message';
-                completeMsg.innerHTML = '🎉 PARABÉNS! O EVENTO COMEÇOU! 🎉';
-                document.querySelector('.timer-section').appendChild(completeMsg);
+                // MOSTRAR A SEÇÃO DO ZÉ PILANTRA GRANDE NA TELA
+                document.getElementById("ze-pilantra-section").style.display = "flex";
 
-                // Reveal all surprises
+                // Criar confete de celebração
+                setTimeout(() => {
+                    createCelebrationConfetti();
+                }, 500);
+
+                // Revelar todas as surpresas
                 revealAllSurprises();
             }
         }, 1000);
+
+        // Criar confete de celebração
+        function createCelebrationConfetti() {
+            const confettiCount = 150;
+            const colors = ['#ff00ff', '#ffff00', '#00ffff', '#ff7700', '#00ff00', '#ff0080'];
+            const emojis = ['🎊', '✨', '🎉', '🕺', '🌟', '💃', '🔥', '🎈'];
+
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.zIndex = '9999';
+                    confetti.style.fontSize = Math.random() * 30 + 20 + 'px';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-50px';
+
+                    // Escolher entre emoji ou quadrado colorido
+                    if (Math.random() > 0.5) {
+                        confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    } else {
+                        confetti.style.width = Math.random() * 20 + 10 + 'px';
+                        confetti.style.height = Math.random() * 20 + 10 + 'px';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    }
+
+                    // Animação aleatória
+                    const duration = Math.random() * 3 + 2;
+                    const delay = Math.random() * 2;
+
+                    confetti.style.animation = `falling ${duration}s ease-in ${delay}s forwards`;
+
+                    document.body.appendChild(confetti);
+
+                    // Remover após animação
+                    setTimeout(() => {
+                        if (confetti.parentNode) confetti.remove();
+                    }, (duration + delay) * 1000);
+
+                }, i * 10);
+            }
+        }
+
+        // Adicionar keyframes para o confete
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes falling {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(${Math.random() * 720}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
         function revealAllSurprises() {
             const cards = document.querySelectorAll('.card');
@@ -731,20 +1122,20 @@
                 }, index * 500);
             });
 
-            // Create more floating gifts
+            // Criar mais presentes flutuantes
             for (let i = 0; i < 10; i++) {
                 setTimeout(() => createFloatingGift(), i * 300);
             }
         }
 
-        // Card Click Interaction
+        // Interação de clique nas cartas
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', function () {
                 this.classList.toggle('flipped');
             });
         });
 
-        // Floating Surprises Logic
+        // Lógica dos presentes flutuantes
         const popupModal = document.getElementById('popup-modal');
         const closePopup = document.querySelector('.close-popup');
         const icons = ['🎁', '✨', '🎈', '💖', '🎀', '🌟', '🥳', '🎊'];
@@ -760,15 +1151,15 @@
             gift.classList.add('floating-gift');
             gift.innerText = icons[Math.floor(Math.random() * icons.length)];
 
-            // Random Position
+            // Posição aleatória
             const startLeft = Math.random() * 90 + 5;
             gift.style.left = startLeft + 'vw';
 
-            // Random Animation Duration
+            // Duração aleatória da animação
             const duration = Math.random() * 10 + 10;
             gift.style.animationDuration = duration + 's';
 
-            // Click Event
+            // Evento de clique
             gift.addEventListener('click', (e) => {
                 e.stopPropagation();
                 showPopup();
@@ -777,7 +1168,7 @@
 
             document.body.appendChild(gift);
 
-            // Remove when animation ends
+            // Remover quando a animação terminar
             setTimeout(() => {
                 if (gift.parentNode) gift.remove();
             }, duration * 1000);
@@ -791,7 +1182,7 @@
             popupModal.classList.add('active');
         }
 
-        // Close popup
+        // Fechar popup
         closePopup.addEventListener('click', () => {
             popupModal.classList.remove('active');
         });
@@ -802,32 +1193,32 @@
             }
         });
 
-        // Spawn gifts every 3 seconds
+        // Criar presentes a cada 3 segundos
         setInterval(createFloatingGift, 3000);
 
-        // Create initial particles and gifts
+        // Criar partículas e presentes iniciais
         window.addEventListener('DOMContentLoaded', () => {
             createParticles();
 
-            // Create initial floating gifts
+            // Criar presentes flutuantes iniciais
             for (let i = 0; i < 5; i++) {
                 setTimeout(() => createFloatingGift(), i * 1000);
             }
 
-            // Preload images
+            // Pré-carregar imagens
             surpriseImages.forEach(src => {
                 const img = new Image();
                 img.src = src;
             });
         });
 
-        // Add keyboard support
+        // Suporte ao teclado
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && popupModal.classList.contains('active')) {
                 popupModal.classList.remove('active');
             }
 
-            // Spacebar flips random card
+            // Espaço vira uma carta aleatória
             if (e.key === ' ' && !e.target.matches('input, textarea')) {
                 const cards = document.querySelectorAll('.card');
                 const randomCard = cards[Math.floor(Math.random() * cards.length)];
